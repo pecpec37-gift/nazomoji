@@ -75,6 +75,11 @@
     min-height:230px;padding:6px;overflow:hidden;
     background:#fffdf8;border-radius:16px;border:1px solid #f2e8d2;
   }
+  /* 図案を枠幅に合わせて自動縮小するラッパー */
+  .artfit{
+    display:inline-flex;align-items:center;justify-content:center;
+    white-space:nowrap;transform-origin:center center;
+  }
 
   /* 図案共通の文字サイズ（レスポンシブ） */
   .ch-xl{font-size:clamp(96px,34vw,150px);font-weight:800;line-height:1;}
@@ -217,10 +222,10 @@ const QUESTIONS = [
     hint:"１が切れている",
     explanation:"「１（ワン）」が切れているので「ワン切り」",
     art:`
-      <div style="position:relative;width:clamp(90px,30vw,120px);height:clamp(160px,52vw,210px);">
-        <span style="position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(130px,44vw,185px);font-weight:900;color:#334155;clip-path:inset(0 0 55% 0);transform:translateX(-9px)">1</span>
-        <span style="position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(130px,44vw,185px);font-weight:900;color:#334155;clip-path:inset(52% 0 0 0);transform:translateX(9px)">1</span>
-        <span style="position:absolute;top:43%;left:-10px;font-size:clamp(24px,9vw,36px);transform:rotate(14deg)">✂️</span>
+      <div style="position:relative;width:clamp(120px,40vw,160px);height:clamp(170px,54vw,215px);">
+        <span style="position:absolute;inset:0;display:grid;place-items:center;font-family:Georgia,'Times New Roman',serif;font-size:clamp(150px,50vw,200px);font-weight:700;color:#334155;line-height:1;clip-path:inset(0 0 52% 0);">1</span>
+        <span style="position:absolute;inset:0;display:grid;place-items:center;font-family:Georgia,'Times New Roman',serif;font-size:clamp(150px,50vw,200px);font-weight:700;color:#334155;line-height:1;clip-path:inset(56% 0 0 0);">1</span>
+        <span style="position:absolute;top:44%;left:8%;font-size:clamp(30px,11vw,44px);transform:rotate(10deg);">✂️</span>
       </div>`
   },
   {
@@ -258,7 +263,7 @@ const QUESTIONS = [
     hint:"＆をローマ字にすると・・・",
     explanation:"Ｐ＿ＡＮＤ＿Ａ をつなげると ＰＡＮＤＡ になるので「パンダ」",
     art:`
-      <div style="font-weight:900;color:#334155;font-size:clamp(80px,28vw,120px);letter-spacing:4px;">
+      <div style="font-weight:900;color:#334155;font-size:clamp(80px,28vw,120px);letter-spacing:0;white-space:nowrap;">
         Ｐ<span style="color:#dc2626;">＆</span>Ａ
       </div>`
   },
@@ -341,7 +346,7 @@ function showQuestion(){
     </div>
     <div class="card">
       <div class="qlabel">何て読むでしょうか？</div>
-      <div class="stagebox">${q.art}</div>
+      <div class="stagebox"><div class="artfit" id="artfit">${q.art}</div></div>
 
       <div class="reveal">
         <div class="box box-hint" id="boxHint"><span class="tag">💡 ヒント</span><br>${q.hint}</div>
@@ -378,6 +383,22 @@ function showQuestion(){
   document.getElementById('selfNg').onclick     = ()=>selfScore(false);
 
   startTimer();
+  fitArt();
+  requestAnimationFrame(fitArt);
+  setTimeout(fitArt, 80);
+}
+
+/* 図案を枠幅にぴったり収める（改行・見切れ防止） */
+function fitArt(){
+  const box = document.querySelector('.stagebox');
+  const fit = document.getElementById('artfit');
+  if(!box || !fit) return;
+  fit.style.transform = 'none';
+  const avail = box.clientWidth - 16;   // 左右パディング分の余白
+  const natural = fit.scrollWidth;
+  if(natural > avail && natural > 0){
+    fit.style.transform = 'scale(' + (avail / natural) + ')';
+  }
 }
 
 function toggle(id){
@@ -477,6 +498,7 @@ function finish(){
 }
 
 /* 起動 */
+window.addEventListener('resize', ()=>{ if(document.getElementById('artfit')) fitArt(); });
 renderTitle();
 </script>
 </body>

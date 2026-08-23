@@ -119,7 +119,8 @@
   .btn-gotit{background:var(--gotit);}
   .btn-answer{background:var(--answer);}
   .btn-explain{background:var(--explain);}
-  .btn-next{background:var(--next);grid-column:1 / -1;font-size:18px;padding:17px;}
+  .btn-next{background:var(--next);font-size:18px;padding:17px;}
+  .btn-prev{background:#94a3b8;font-size:16px;}
   .btn.pulse{animation:bpulse 1s infinite;}
   @keyframes bpulse{50%{filter:brightness(1.18);box-shadow:0 0 0 4px rgba(37,99,235,.25);}}
 
@@ -554,8 +555,7 @@ let order = [];
 let idx = 0;
 let timeLeft = TIME_LIMIT;
 let timerId = null;
-let answered = 0;   // 自己申告の正解数
-let scored = false; // その問で自己採点済みか
+let results = [];   // 各問の自己採点（true/false/null）を出題順に記録
 
 const app = document.getElementById('app');
 
@@ -600,13 +600,12 @@ function startGame(shuffle){
     }
   }
   idx = 0;
-  answered = 0;
+  results = new Array(order.length).fill(null);
   showQuestion();
 }
 
 /* ===================== 問題表示 ===================== */
 function showQuestion(){
-  scored = false;
   const q = QUESTIONS[order[idx]];
   timeLeft = TIME_LIMIT;
 
@@ -638,7 +637,10 @@ function showQuestion(){
         <button class="btn btn-gotit"   id="btnGotit">🙋 わかった！</button>
         <button class="btn btn-answer"  id="btnAnswer">✅ 答え</button>
         <button class="btn btn-explain" id="btnExplain">📖 解説</button>
-        <button class="btn btn-next"    id="btnNext">${idx+1<QUESTIONS.length?'▶ 次の問題':'🏁 結果を見る'}</button>
+        <div style="grid-column:1 / -1;display:flex;gap:10px;">
+          ${idx>0 ? '<button class="btn btn-prev" id="btnPrev" style="flex:0 0 40%;padding:17px 6px;">◁ 前の問題</button>' : ''}
+          <button class="btn btn-next" id="btnNext" style="flex:1;">${idx+1<QUESTIONS.length?'▶ 次の問題':'🏁 結果を見る'}</button>
+        </div>
       </div>
     </div>
     <div class="quitwrap"><button class="quit" id="btnQuit">やめる（タイトルへ）</button></div>
@@ -649,6 +651,8 @@ function showQuestion(){
   document.getElementById('btnAnswer').onclick  = showAnswer;
   document.getElementById('btnExplain').onclick = ()=>toggle('boxExplain');
   document.getElementById('btnNext').onclick    = next;
+  const prevBtn = document.getElementById('btnPrev');
+  if(prevBtn) prevBtn.onclick = prev;
   document.getElementById('btnQuit').onclick    = quit;
   document.getElementById('selfOk').onclick     = ()=>selfScore(true);
   document.getElementById('selfNg').onclick     = ()=>selfScore(false);
@@ -709,15 +713,16 @@ function showAnswer(timeup){
   pauseTimer();
   document.getElementById('boxAnswer').classList.add('show');
   document.getElementById('btnAnswer').classList.remove('pulse');
-  if(!scored){
+  if(results[idx]==null){
     document.getElementById('selfcheck').classList.add('show');
+  }else{
+    // すでに採点済み（前に戻ってきた場合など）→ 解説を表示
+    document.getElementById('boxExplain').classList.add('show');
   }
 }
 
 function selfScore(ok){
-  if(scored) return;
-  scored = true;
-  if(ok) answered++;
+  results[idx] = ok;   // 上書き記録（前後に移動しても二重カウントしない）
   const sc = document.getElementById('selfcheck');
   sc.innerHTML = ok
     ? '<p style="color:#16a34a;font-size:18px;">🎉 正解！ すごい！</p>'
@@ -738,6 +743,16 @@ function next(){
   }
 }
 
+/* 前へ（誤って次へ進んだ時の戻り用） */
+function prev(){
+  pauseTimer();
+  if(idx>0){
+    idx--;
+    showQuestion();
+    window.scrollTo(0,0);
+  }
+}
+
 function quit(){
   if(confirm('クイズをやめてタイトルに戻りますか？')){
     pauseTimer();
@@ -749,6 +764,7 @@ function quit(){
 function finish(){
   pauseTimer();
   const total = QUESTIONS.length;
+  const answered = results.filter(r=>r===true).length;
   let msg = '';
   const rate = answered/total;
   if(rate===1) msg = 'パーフェクト！ 図案マスター！！';

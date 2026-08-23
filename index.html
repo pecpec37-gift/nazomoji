@@ -160,7 +160,7 @@
 const QUESTIONS = [
   {
     answer:"不良品",
-    hint:"品に凸凹が含まれている",
+    hint:"品に凸凹が含まれている。品質が悪い。",
     explanation:"品に凸凹（でこぼこ）が含まれている＝良くない品なので「不良品」",
     art:`
       <svg viewBox="0 0 260 220" width="100%" style="max-width:250px" xmlns="http://www.w3.org/2000/svg">
@@ -188,7 +188,7 @@ const QUESTIONS = [
   },
   {
     answer:"音痴",
-    hint:"何がずれている？",
+    hint:"ずれているのは何の漢字？カラオケで判明？",
     explanation:"「音」の字がずれている（＝音がずれている）から「音痴」",
     art:`
       <div style="display:flex;flex-direction:column;align-items:center;">
@@ -220,7 +220,7 @@ const QUESTIONS = [
   },
   {
     answer:"ワン切り",
-    hint:"１が切れている",
+    hint:"１が切れている。〇〇〇〇詐欺という事件もありました。",
     explanation:"「１（ワン）」が切れているので「ワン切り」",
     art:`
       <div style="position:relative;width:clamp(120px,40vw,160px);height:clamp(170px,54vw,215px);">
@@ -231,7 +231,7 @@ const QUESTIONS = [
   },
   {
     answer:"伊豆大島",
-    hint:"ＩＳの文字が大きい",
+    hint:"ISLANDは島。ＩＳの文字が大きい",
     explanation:"ＩＳが大きい ＩＳＬＡＮＤ（島）→ 伊豆（ＩＳ）＋大きい＋島 で「伊豆大島」",
     art:`
       <div style="display:flex;align-items:center;white-space:nowrap;font-weight:900;letter-spacing:-2px;">
@@ -241,7 +241,7 @@ const QUESTIONS = [
   },
   {
     answer:"ダイエット",
-    hint:"エの文字が大きい",
+    hint:"エの文字が大きい。本来は健康や病気治療のため。",
     explanation:"大きい「エ」＝“ダイ”な「エ」＋「ット」で「ダイエット」",
     art:`
       <div style="display:flex;align-items:center;gap:2px;font-weight:800;color:#334155;">
@@ -251,7 +251,7 @@ const QUESTIONS = [
   },
   {
     answer:"イラストレーター",
-    hint:"イの文字が最後にある",
+    hint:"イの文字が最後LASTにある。絵を描くお仕事。",
     explanation:"「イ」がラスト（最後）にある → イ・ラスト・レーター で「イラストレーター」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;font-size:clamp(40px,13vw,60px);letter-spacing:2px;">
@@ -261,7 +261,7 @@ const QUESTIONS = [
   },
   {
     answer:"パンダ",
-    hint:"＆をローマ字にすると・・・",
+    hint:"＆をローマ字にするとクマ科の動物になります。",
     explanation:"Ｐ＿ＡＮＤ＿Ａ をつなげると ＰＡＮＤＡ になるので「パンダ」",
     art:`
       <div style="font-weight:900;color:#334155;font-size:clamp(80px,28vw,120px);letter-spacing:0;white-space:nowrap;">
@@ -270,14 +270,14 @@ const QUESTIONS = [
   },
   {
     answer:"ハムスター",
-    hint:"可愛い動物",
+    hint:"可愛い動物。公はカタカナ。星は英語。",
     explanation:"公（ハム）＋星（スター）で「ハムスター」",
     art:`
       <div class="ch-xl" style="font-weight:900;color:#334155;">公星</div>`
   },
   {
     answer:"円相場",
-    hint:"円が上下するのは？",
+    hint:"５円ではないです。円が上下。高くなったり、低くなったり。",
     explanation:"円が上下するのは「円相場」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;font-size:clamp(46px,16vw,66px);white-space:nowrap;">
@@ -290,8 +290,8 @@ const QUESTIONS = [
   },
   {
     answer:"白内障",
-    hint:"障に白の文字が入っている",
-    explanation:"障の内が白になっているので「白内障」",
+    hint:"病気の名前",
+    explanation:"障に内側に白の文字が入っているので「白内障」",
     art:`
       <div style="position:relative;width:210px;height:200px;">
         <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#334155;font-size:clamp(120px,42vw,170px);font-weight:800;line-height:1;">障</span>
@@ -302,8 +302,8 @@ const QUESTIONS = [
   },
   {
     answer:"エレベーター",
-    hint:"上下する箱って何？",
-    explanation:"上下する箱といえば「エレベーター」",
+    hint:"人や荷物を運びます。",
+    explanation:"人や荷物を運ぶ上下する箱といえば「エレベーター」",
     art:`
       <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:#334155;white-space:nowrap;">
         <span style="display:flex;flex-direction:column;font-size:clamp(28px,10vw,40px);color:#2563eb;line-height:.9;"><span>▲</span><span>▼</span></span>
@@ -320,7 +320,7 @@ const QUESTIONS = [
   },
   {
     answer:"食べ放題",
-    hint:"無限（∞）の文字が・・・",
+    hint:"多くの場合、60分や90分などの制限時間があります。",
     explanation:"「食」＋「無限（∞）」で「食べ放題」",
     art:`
       <div style="display:flex;align-items:center;gap:6px;font-weight:800;color:#334155;white-space:nowrap;">
@@ -329,9 +329,9 @@ const QUESTIONS = [
       </div>`
   },
   {
-    answer:"シャーペン",
-    hint:"半濁音の〇ではなく#",
-    explanation:"シャープ＋ペンで「シャーペン」",
+    answer:"シャーペン（シャープペンシル）",
+    hint:"半濁音の〇ではなく#（シャープ）",
+    explanation:"シャープ＋ペンで「シャープペンシル」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;">
         <span style="position:relative;display:inline-block;padding-right:30px;">
@@ -343,7 +343,7 @@ const QUESTIONS = [
   },
   {
     answer:"ペアルック",
-    hint:"男女？LOOK？",
+    hint:"男女？LOOK？一緒だと恥ずかしい人もいます。",
     explanation:"LOOKのOOが♂♀になっているので「ペアルック」",
     art:`
       <div style="display:flex;align-items:center;font-weight:900;color:#334155;white-space:nowrap;font-size:clamp(80px,28vw,116px);letter-spacing:2px;">
@@ -355,7 +355,7 @@ const QUESTIONS = [
   },
   {
     answer:"不幸中の幸い",
-    hint:"不幸と幸の組み合わせ",
+    hint:"不幸と幸の組み合わせ。せめてもの救い。",
     explanation:"「不幸」の中に「幸」があるから「不幸中の幸い」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;font-size:clamp(66px,23vw,96px);">
@@ -380,7 +380,7 @@ const QUESTIONS = [
   },
   {
     answer:"エヘン虫",
-    hint:"編の形が「エ」",
+    hint:"編の形が「エ」。喉のイガイガ。",
     explanation:"「エ偏」＋「虫」で「エヘン虫」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;font-size:clamp(80px,28vw,116px);letter-spacing:-8px;">
@@ -390,8 +390,8 @@ const QUESTIONS = [
   },
   {
     answer:"3点セット",
-    hint:"ツの点の数が違う・・・・",
-    explanation:"ツが3点あるので「3点セット」",
+    hint:"ツの点が３つある。お買い得。",
+    explanation:"ツの点が３点あるので「3点セット」",
     art:`
       <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;font-size:clamp(74px,26vw,108px);">
         <span>セ</span>
@@ -401,7 +401,7 @@ const QUESTIONS = [
   },
   {
     answer:"両面テープ",
-    hint:"テープの文字が・・・",
+    hint:"2つのものを接着してつなぎます。",
     explanation:"テープの文字が両面にあるから「両面テープ」",
     art:`
       <div style="display:flex;flex-direction:column;align-items:center;font-weight:800;color:#334155;font-size:clamp(46px,16vw,66px);line-height:1;white-space:nowrap;">
@@ -452,13 +452,6 @@ const QUESTIONS = [
       </div>`
   },
   {
-    answer:"口紅",
-    hint:"赤い口",
-    explanation:"口が紅い（赤い）ので「口紅」",
-    art:`
-      <div style="font-weight:800;color:#dc2626;font-size:clamp(96px,34vw,150px);line-height:1;">口</div>`
-  },
-  {
     answer:"十人十色",
     hint:"人がみんな違う色",
     explanation:"人が十人、みんな違う色だから「十人十色」",
@@ -478,7 +471,7 @@ const QUESTIONS = [
   },
   {
     answer:"針小棒大",
-    hint:"針は小さく、棒は大きい",
+    hint:"四字熟語。針は小さく、棒は大きい。",
     explanation:"針を小さく棒を大きく書いて「針小棒大」",
     art:`
       <div style="display:flex;align-items:center;gap:12px;font-weight:800;color:#334155;white-space:nowrap;">
@@ -516,22 +509,12 @@ const QUESTIONS = [
   },
   {
     answer:"一目惚れ",
-    hint:"目にハートが一つ",
+    hint:"目にハートが一つ。一瞬のトキメキ♡",
     explanation:"一つの目が惚れる（♡）で「一目惚れ」",
     art:`
       <div style="display:flex;align-items:center;gap:10px;font-weight:800;color:#334155;white-space:nowrap;">
         <span style="font-size:clamp(80px,28vw,116px);">目</span>
         <span style="font-size:clamp(54px,19vw,78px);color:#dc2626;">♡</span>
-      </div>`
-  },
-  {
-    answer:"猫舌",
-    hint:"熱いのが苦手な動物",
-    explanation:"猫＋舌で「猫舌」",
-    art:`
-      <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:#334155;white-space:nowrap;">
-        <span style="font-size:clamp(56px,20vw,80px);">🐱</span>
-        <span style="font-size:clamp(70px,24vw,104px);">舌</span>
       </div>`
   },
   {

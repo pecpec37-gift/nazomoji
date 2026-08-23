@@ -48,6 +48,25 @@
   .badge{background:#fdf0d5;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;color:#a9803a;}
   .opt{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 20px;font-size:15px;color:#6b6152;}
   .opt input{width:20px;height:20px;accent-color:var(--next);}
+
+  /* TOP：評価で絞り込み */
+  .filter{background:#fbf3df;border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 18px;}
+  .filter-title{font-weight:800;color:#a9803a;font-size:14px;margin-bottom:10px;text-align:center;}
+  .fgrid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .fchk{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:14px;font-weight:700;color:#6b6152;cursor:pointer;}
+  .fchk input{width:18px;height:18px;accent-color:var(--next);}
+
+  /* 問題の評価（答え表示後） */
+  .ratebox{display:none;margin-top:12px;text-align:center;border-top:1px dashed var(--line);padding-top:12px;}
+  .ratebox.show{display:block;}
+  .ratebox p{margin:0 0 8px;font-weight:700;color:#6b6152;font-size:14px;}
+  .ratebox .row{display:flex;gap:8px;justify-content:center;}
+  .rbtn{flex:1;max-width:120px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;font-size:15px;font-weight:800;color:#6b6152;cursor:pointer;}
+  .rbtn:active{transform:scale(.96);}
+  .rbtn.sel{color:#fff;border-color:transparent;}
+  #rateGood.sel{background:#16a34a;}
+  #rateOk.sel{background:#f59e0b;}
+  #rateBad.sel{background:#94a3b8;}
   .example{
     background:#fbf3df;border:1px dashed var(--line);border-radius:14px;
     padding:14px;margin:0 0 22px;font-size:14px;color:#7a6c4f;line-height:1.7;text-align:left;
@@ -542,9 +561,34 @@ let results = [];   // 各問の自己採点（true/false/null）を出題順に
 
 const app = document.getElementById('app');
 
+/* ===================== 問題の評価（ブラウザに保存） ===================== */
+const RATE_KEY = 'nazoRatings_v1';
+let ratings = loadRatings();  // { 答えテキスト: 'good'|'ok'|'bad' }
+
+function loadRatings(){
+  try{ return JSON.parse(localStorage.getItem(RATE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveRatings(){
+  try{ localStorage.setItem(RATE_KEY, JSON.stringify(ratings)); }catch(e){}
+}
+function getRating(qIndex){ return ratings[QUESTIONS[qIndex].answer] || null; }
+function setRating(qIndex, val){
+  const key = QUESTIONS[qIndex].answer;
+  if(ratings[key]===val){ delete ratings[key]; } // 同じものを再タップで解除
+  else { ratings[key] = val; }
+  saveRatings();
+}
+function ratingCounts(){
+  const c = {good:0, ok:0, bad:0, none:0};
+  QUESTIONS.forEach((q,i)=>{ const r=getRating(i)||'none'; c[r]++; });
+  return c;
+}
+
 /* ===================== タイトル ===================== */
 function renderTitle(){
   clearInterval(timerId);
+  const cnt = ratingCounts();
   app.innerHTML = `
     <div class="topline"><a class="tommy-go" href="${PORTAL_URL}">← Tommy-Go</a></div>
     <div class="title-screen">
@@ -561,21 +605,58 @@ function renderTitle(){
         画面に出てくる「加工された文字」を見て、何と読むか当ててね。<br>
         わからなければ「ヒント」、当てたら「わかった！」、答え合わせは「答え」＆「解説」で！
       </div>
+      <div class="filter">
+        <div class="filter-title">出題する問題（評価でしぼり込み・複数選択可）</div>
+        <div class="fgrid">
+          <label class="fchk"><input type="checkbox" id="fAll" checked> すべて（${cnt.good+cnt.ok+cnt.bad+cnt.none}）</label>
+          <label class="fchk"><input type="checkbox" id="fGood"> ◎ 良い（${cnt.good}）</label>
+          <label class="fchk"><input type="checkbox" id="fOk"> 〇 普通（${cnt.ok}）</label>
+          <label class="fchk"><input type="checkbox" id="fBad"> △ 悪い（${cnt.bad}）</label>
+          <label class="fchk"><input type="checkbox" id="fNone"> 未評価（${cnt.none}）</label>
+        </div>
+      </div>
       <label class="opt">
         <input type="checkbox" id="shuffleChk" checked>
         問題をランダムに出す
       </label>
       <button class="primary" id="startBtn">スタート</button>
     </div>`;
+
+  const fAll = document.getElementById('fAll');
+  const subs = ['fGood','fOk','fBad','fNone'].map(id=>document.getElementById(id));
+  fAll.onchange = ()=>{ if(fAll.checked) subs.forEach(c=>c.checked=false); else if(!subs.some(c=>c.checked)) fAll.checked=true; };
+  subs.forEach(c=> c.onchange = ()=>{
+    if(c.checked) fAll.checked=false;
+    if(!subs.some(x=>x.checked)) fAll.checked=true;
+  });
+
   document.getElementById('startBtn').onclick = ()=>{
     const shuffle = document.getElementById('shuffleChk').checked;
-    startGame(shuffle);
+    let cats = null;
+    if(!fAll.checked){
+      cats = new Set();
+      if(document.getElementById('fGood').checked) cats.add('good');
+      if(document.getElementById('fOk').checked)   cats.add('ok');
+      if(document.getElementById('fBad').checked)  cats.add('bad');
+      if(document.getElementById('fNone').checked) cats.add('none');
+      if(cats.size===0) cats = null; // 何も選ばれていなければ全問
+    }
+    startGame(shuffle, cats);
   };
 }
 
 /* ===================== ゲーム開始 ===================== */
-function startGame(shuffle){
-  order = QUESTIONS.map((_,i)=>i);
+function startGame(shuffle, cats){
+  // cats: null（＝すべて）または Set('good','ok','bad','none')
+  let list = QUESTIONS.map((_,i)=>i);
+  if(cats){
+    list = list.filter(i=> cats.has(getRating(i) || 'none'));
+  }
+  if(list.length===0){
+    alert('選んだ評価に当てはまる問題がありません。\n別の評価を選んでください。');
+    return;
+  }
+  order = list;
   if(shuffle){
     for(let i=order.length-1;i>0;i--){
       const j = Math.floor(Math.random()*(i+1));
@@ -594,7 +675,7 @@ function showQuestion(){
 
   app.innerHTML = `
     <div class="topbar">
-      <span class="qcount">第 ${idx+1} 問 / 全 ${QUESTIONS.length} 問</span>
+      <span class="qcount">第 ${idx+1} 問 / 全 ${order.length} 問</span>
       <span class="timer" id="timer">残り ${timeLeft}秒</span>
     </div>
     <div class="card">
@@ -615,6 +696,15 @@ function showQuestion(){
         </div>
       </div>
 
+      <div class="ratebox" id="ratebox">
+        <p>この問題の評価（任意）</p>
+        <div class="row">
+          <button class="rbtn" id="rateGood" data-v="good">◎ 良い</button>
+          <button class="rbtn" id="rateOk"   data-v="ok">〇 普通</button>
+          <button class="rbtn" id="rateBad"  data-v="bad">△ 悪い</button>
+        </div>
+      </div>
+
       <div class="btns">
         <button class="btn btn-hint"    id="btnHint">💡 ヒント</button>
         <button class="btn btn-gotit"   id="btnGotit">🙋 わかった！</button>
@@ -622,7 +712,7 @@ function showQuestion(){
         <button class="btn btn-explain" id="btnExplain">📖 解説</button>
         <div style="grid-column:1 / -1;display:flex;gap:10px;">
           ${idx>0 ? '<button class="btn btn-prev" id="btnPrev" style="flex:0 0 40%;padding:17px 6px;">◁ 前の問題</button>' : ''}
-          <button class="btn btn-next" id="btnNext" style="flex:1;">${idx+1<QUESTIONS.length?'▶ 次の問題':'🏁 結果を見る'}</button>
+          <button class="btn btn-next" id="btnNext" style="flex:1;">${idx+1<order.length?'▶ 次の問題':'🏁 結果を見る'}</button>
         </div>
       </div>
     </div>
@@ -639,6 +729,9 @@ function showQuestion(){
   document.getElementById('btnQuit').onclick    = quit;
   document.getElementById('selfOk').onclick     = ()=>selfScore(true);
   document.getElementById('selfNg').onclick     = ()=>selfScore(false);
+  document.getElementById('rateGood').onclick   = ()=>rateQuestion('good');
+  document.getElementById('rateOk').onclick     = ()=>rateQuestion('ok');
+  document.getElementById('rateBad').onclick    = ()=>rateQuestion('bad');
 
   startTimer();
   fitArt();
@@ -702,6 +795,22 @@ function showAnswer(timeup){
     // すでに採点済み（前に戻ってきた場合など）→ 解説を表示
     document.getElementById('boxExplain').classList.add('show');
   }
+  // 問題の評価（任意）を表示
+  document.getElementById('ratebox').classList.add('show');
+  refreshRateUI();
+}
+
+/* 問題の評価をつける（同じものを再タップで解除） */
+function rateQuestion(val){
+  setRating(order[idx], val);
+  refreshRateUI();
+}
+function refreshRateUI(){
+  const cur = getRating(order[idx]);
+  ['rateGood','rateOk','rateBad'].forEach(id=>{
+    const b = document.getElementById(id);
+    if(b) b.classList.toggle('sel', b.dataset.v===cur);
+  });
 }
 
 function selfScore(ok){
@@ -717,7 +826,7 @@ function selfScore(ok){
 /* 次へ */
 function next(){
   pauseTimer();
-  if(idx+1<QUESTIONS.length){
+  if(idx+1<order.length){
     idx++;
     showQuestion();
     window.scrollTo(0,0);
@@ -746,7 +855,7 @@ function quit(){
 /* 結果 */
 function finish(){
   pauseTimer();
-  const total = QUESTIONS.length;
+  const total = order.length;
   const answered = results.filter(r=>r===true).length;
   let msg = '';
   const rate = answered/total;

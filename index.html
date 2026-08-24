@@ -408,17 +408,6 @@ const QUESTIONS = [
       </div>`
   },
   {
-    answer:"3点セット",
-    hint:"ツの点が３つある。お買い得。",
-    explanation:"ツの点が３点あるので「3点セット」",
-    art:`
-      <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;font-size:clamp(74px,26vw,108px);">
-        <span>セ</span>
-        <span style="position:relative;display:inline-block;">ツ<span style="position:absolute;top:0.03em;left:70%;transform:rotate(-20deg);width:0.075em;height:0.24em;background:#334155;border-radius:3px;"></span></span>
-        <span>ト</span>
-      </div>`
-  },
-  {
     answer:"両面テープ",
     hint:"2つのものを接着してつなぎます。",
     explanation:"テープの文字が両面にあるから「両面テープ」",
@@ -547,7 +536,71 @@ const QUESTIONS = [
         <span style="transform:translateY(-14px) rotate(-6deg);">足</span>
         <span style="transform:translateY(18px) rotate(8deg);">足</span>
       </div>`
-  }
+  },
+  {
+    answer:"サンセット",
+    hint:"沈む太陽（SUN＝サン）。夕方の風景。",
+    explanation:"沈むSUN（サン）＋SET で「サンセット」（＝日の入り）",
+    art:`
+      <div style="display:flex;align-items:center;gap:14px;white-space:nowrap;">
+        <div style="position:relative;width:110px;height:96px;">
+          <div style="position:absolute;left:50%;top:14px;transform:translateX(-50%);width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fbbf24,#f97316);"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:36px;background:#fffdf8;"></div>
+          <div style="position:absolute;left:0;right:0;bottom:36px;height:5px;background:#334155;border-radius:3px;"></div>
+          <div style="position:absolute;left:50%;bottom:8px;transform:translateX(-50%);color:#f97316;font-size:20px;">▼</div>
+        </div>
+        <span style="font-size:clamp(56px,20vw,82px);font-weight:900;color:#334155;">SET</span>
+      </div>`
+  },
+  {
+    answer:"四苦八苦",
+    hint:"苦が4つと8つ。とても苦労すること。",
+    explanation:"「苦」が四つと八つで「四苦八苦」",
+    art:`
+      <div style="display:flex;align-items:center;gap:16px;font-weight:800;color:#334155;">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;font-size:clamp(26px,9vw,40px);">
+          <span>苦</span><span>苦</span><span>苦</span><span>苦</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;font-size:clamp(26px,9vw,40px);">
+          <span>苦</span><span>苦</span><span>苦</span><span>苦</span><span>苦</span><span>苦</span><span>苦</span><span>苦</span>
+        </div>
+      </div>`
+  },
+  {
+    answer:"右肩上がり",
+    hint:"右へ行くほど高くなる。業績などが好調。",
+    explanation:"右へ上がっていくので「右肩上がり」",
+    art:`
+      <div style="display:flex;align-items:flex-end;gap:8px;height:120px;">
+        <div style="width:24px;height:34px;background:#2563eb;border-radius:4px;"></div>
+        <div style="width:24px;height:58px;background:#2563eb;border-radius:4px;"></div>
+        <div style="width:24px;height:84px;background:#2563eb;border-radius:4px;"></div>
+        <div style="width:24px;height:110px;background:#2563eb;border-radius:4px;"></div>
+        <span style="font-size:40px;color:#f97316;align-self:flex-start;transform:translateY(-6px);">↗</span>
+      </div>`
+  },
+  {
+    answer:"右往左往",
+    hint:"右へ左へ、あちこち。慌てて動き回る。",
+    explanation:"「右」と「左」があちこち向いていて「右往左往」",
+    art:`
+      <div style="position:relative;width:210px;height:150px;font-weight:800;color:#334155;font-size:clamp(40px,14vw,58px);">
+        <span style="position:absolute;top:0;left:6px;transform:rotate(-24deg);">右</span>
+        <span style="position:absolute;top:10px;right:12px;transform:rotate(30deg);">左</span>
+        <span style="position:absolute;bottom:4px;left:26px;transform:rotate(18deg);">左</span>
+        <span style="position:absolute;bottom:0;right:34px;transform:rotate(-14deg);">右</span>
+      </div>`
+  },
+  {
+    answer:"一直線",
+    hint:"1本の、まっすぐな線。わき目もふらず。",
+    explanation:"1（いち）＋まっすぐな直線で「一直線」",
+    art:`
+      <div style="display:flex;align-items:center;gap:10px;white-space:nowrap;">
+        <span style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(90px,32vw,130px);font-weight:700;color:#334155;">1</span>
+        <div style="width:clamp(120px,40vw,180px);height:8px;background:#334155;border-radius:4px;"></div>
+      </div>`
+  },
 ];
 
 /* ===================== 状態 ===================== */

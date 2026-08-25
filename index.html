@@ -567,19 +567,6 @@ const QUESTIONS = [
       </div>`
   },
   {
-    answer:"右肩上がり",
-    hint:"右へ行くほど高くなる。業績などが好調。",
-    explanation:"右へ上がっていくので「右肩上がり」",
-    art:`
-      <div style="display:flex;align-items:flex-end;gap:8px;height:120px;">
-        <div style="width:24px;height:34px;background:#2563eb;border-radius:4px;"></div>
-        <div style="width:24px;height:58px;background:#2563eb;border-radius:4px;"></div>
-        <div style="width:24px;height:84px;background:#2563eb;border-radius:4px;"></div>
-        <div style="width:24px;height:110px;background:#2563eb;border-radius:4px;"></div>
-        <span style="font-size:40px;color:#f97316;align-self:flex-start;transform:translateY(-6px);">↗</span>
-      </div>`
-  },
-  {
     answer:"右往左往",
     hint:"右へ左へ、あちこち。慌てて動き回る。",
     explanation:"「右」と「左」があちこち向いていて「右往左往」",
@@ -601,6 +588,60 @@ const QUESTIONS = [
         <div style="width:clamp(120px,40vw,180px);height:8px;background:#334155;border-radius:4px;"></div>
       </div>`
   },
+  {
+    answer:"林間学校",
+    hint:"小中学校などが山や高原の宿泊施設で行う集団学習",
+    explanation:"文（学校）が林の間にあるから「林間学校」",
+    art:`
+      <div style="display:flex;align-items:center;font-weight:800;color:#334155;font-size:clamp(70px,25vw,108px);white-space:nowrap;letter-spacing:-2px;">
+        <span>木</span><span style="color:#dc2626;">文</span><span>木</span>
+      </div>`
+  },
+  {
+    answer:"裏声",
+    hint:"地声より高い音域",
+    explanation:"声が裏返っているので「裏声」",
+    art:`
+      <div style="display:inline-block;transform:scaleX(-1);font-weight:800;color:#334155;font-size:clamp(96px,34vw,150px);line-height:1;">声</div>`
+  },
+  {
+    answer:"デュエット",
+    hint:"二人で行う歌唱や演奏",
+    explanation:"一人の唄（口貝）にもう一人の口を追加して「デュエット」",
+    art:`
+      <div style="display:flex;align-items:center;font-weight:800;color:#334155;white-space:nowrap;letter-spacing:-3px;">
+        <span style="font-size:clamp(66px,23vw,100px);">口貝</span>
+        <span style="font-size:clamp(38px,13vw,54px);color:#dc2626;margin-left:2px;">口</span>
+      </div>`
+  },
+  {
+    answer:"八方美人",
+    hint:"だれにでも良い顔をする人。八方＝あらゆる方向。",
+    explanation:"「美」があらゆる方向（八方）を向いていて「八方美人」",
+    art:`
+      <div style="position:relative;width:180px;height:170px;font-weight:800;color:#334155;">
+        <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(56px,20vw,80px);">美</span>
+        <span style="position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:clamp(20px,7vw,28px);color:#2563eb;">↑</span>
+        <span style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:clamp(20px,7vw,28px);color:#2563eb;">↓</span>
+        <span style="position:absolute;top:50%;left:0;transform:translateY(-50%);font-size:clamp(20px,7vw,28px);color:#2563eb;">←</span>
+        <span style="position:absolute;top:50%;right:0;transform:translateY(-50%);font-size:clamp(20px,7vw,28px);color:#2563eb;">→</span>
+        <span style="position:absolute;top:8px;left:10px;font-size:clamp(20px,7vw,28px);color:#2563eb;">↖</span>
+        <span style="position:absolute;top:8px;right:10px;font-size:clamp(20px,7vw,28px);color:#2563eb;">↗</span>
+        <span style="position:absolute;bottom:8px;left:10px;font-size:clamp(20px,7vw,28px);color:#2563eb;">↙</span>
+        <span style="position:absolute;bottom:8px;right:10px;font-size:clamp(20px,7vw,28px);color:#2563eb;">↘</span>
+      </div>`
+  },
+  {
+    answer:"千切り",
+    hint:"野菜などを細く切ること",
+    explanation:"「千」が切れているので「千切り」",
+    art:`
+      <div style="position:relative;width:clamp(120px,40vw,160px);height:clamp(150px,50vw,200px);">
+        <span style="position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(120px,42vw,175px);font-weight:800;color:#334155;line-height:1;clip-path:inset(0 0 50% 0);">千</span>
+        <span style="position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(120px,42vw,175px);font-weight:800;color:#334155;line-height:1;clip-path:inset(54% 0 0 0);transform:translateX(7px);">千</span>
+        <span style="position:absolute;top:44%;left:4%;font-size:clamp(26px,10vw,38px);transform:rotate(10deg);">✂️</span>
+      </div>`
+  }
 ];
 
 /* ===================== 状態 ===================== */

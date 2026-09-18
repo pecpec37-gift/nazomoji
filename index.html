@@ -684,7 +684,7 @@ function renderTitle(){
   clearInterval(timerId);
   const cnt = ratingCounts();
   app.innerHTML = `
-    <div class="topline"><a class="tommy-go" href="${PORTAL_URL}">← Tommy-Go</a></div>
+    <div class="topline"><a class="tommy-go" href="${PORTAL_URL}">← ポータルサイトに戻る</a></div>
     <div class="title-screen">
       <div style="font-size:44px;">🧩</div>
       <h1>何て読む？<br>図案クイズ道場</h1>
@@ -965,7 +965,7 @@ function finish(){
       <div class="score">${answered} / ${total} 問</div>
       <div class="msg">${msg}</div>
       <button class="primary" id="againBtn">もう一度あそぶ</button>
-      <div style="margin-top:16px;"><a class="tommy-go" href="${PORTAL_URL}">← Tommy-Go</a></div>
+      <div style="margin-top:16px;"><a class="tommy-go" href="${PORTAL_URL}">← ポータルサイトに戻る</a></div>
     </div>`;
   document.getElementById('againBtn').onclick = renderTitle;
 }
